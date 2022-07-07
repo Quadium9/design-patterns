@@ -1,0 +1,34 @@
+<div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <fieldset>
+                        <div class="form-group">
+                            {{ register_forms.username.label(class='form-control-label') }}
+                            {{ register_forms.username(class='form-control') }}
+                        </div>
+                        <div class="form-group">
+                            {{ register_forms.password.label(class='form-control-label') }}
+                            {{ register_forms.password(class='form-control') }}
+                        </div>
+                        <div class="form-group">
+                            {{ register_forms.repeat_password.label(class='form-control-label') }}
+                            {{ register_forms.repeat_password(class='form-control') }}
+                        </div>
+                    </fieldset>
+                    <div class="field-group mt-5" style="text-align:center;">
+                        {{ register_forms.submit(class='btn btn-info', style="width:128px;") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
