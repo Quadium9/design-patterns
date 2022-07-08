@@ -4,10 +4,6 @@ from Database.hash import compare_hash, create_hash
 
 
 class User(UserModel):
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
     def add_user(self):
         try:
             db.session.add(self)
