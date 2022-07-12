@@ -1,4 +1,4 @@
-from model import NoteModel
+from Database.model import NoteModel
 from app import db
 
 

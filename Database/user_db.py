@@ -1,21 +1,25 @@
-from model import UserModel
+from Database.model import UserModel
 from app import db
-from Database.hash import compare_hash, create_hash
+from Database import hash
 
 
-class User(UserModel):
-    def add_user(self):
+class User:
+    @staticmethod
+    def add_user(user_model):
         try:
-            db.session.add(self)
+            user_model.password = hash.create_hash(user_model.password)
+            db.session.add(user_model)
             db.session.commit()
             return True
         except:
             return False
 
-    def login_user(self):
+    @staticmethod
+    def login_user(user_model):
         try:
-            db_user: UserModel = db.session.query(UserModel).filter(UserModel.username == self.username).first()
-            if compare_hash(self.password, db_user.password):
+            db_user: UserModel = db.session.query(UserModel).filter(
+                UserModel.username == user_model.username).first()
+            if hash.compare_hash(user_model.password, db_user.password):
                 return db_user
             return None
         except:

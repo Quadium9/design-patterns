@@ -1,4 +1,3 @@
-from flask_login import UserMixin
 from sqlalchemy import Column, DateTime, String, ForeignKey
 from sqlalchemy.dialects.mysql import INTEGER, TINYTEXT
 from sqlalchemy.ext.declarative import declarative_base
@@ -16,7 +15,7 @@ class NoteModel(Base):
     create_date = Column(DateTime)
     planned_date = Column(DateTime)
     description = Column(TINYTEXT)
-    active = Column(String(10), 'utf8mb3_polish_ci')
+    active = Column(INTEGER(11))
     user_id = Column(ForeignKey('user.id'), index=True)
 
     user = relationship('UserModel')
@@ -29,7 +28,7 @@ class NoteModel(Base):
         self.active = active
 
 
-class UserModel(Base, UserMixin):
+class UserModel(Base):
     __tablename__ = 'user'
 
     id = Column(INTEGER(11), primary_key=True)

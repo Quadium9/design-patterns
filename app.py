@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from Forms.note_forms import AddNoteForms, EditNoteForms, SearchNoteForms
 from Forms.login_forms import LoginForms, RegisterForms
@@ -8,7 +8,14 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Tajny z tajnych tokenow'
 app.config['SQLALCHEMY_DATABASE_URI'] = "mariadb+mariadbconnector://root:root@localhost:3306/note"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
+
+from Routes.r_user import r_user
+from Routes.r_notes import r_note
+
+app.register_blueprint(r_user, url_prefix='/user')
+app.register_blueprint(r_note, url_prefix='/note')
 
 
 @app.route('/start')
@@ -22,13 +29,17 @@ def main():
                            search_note_forms=search_note_forms)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def start():
-    register_forms = RegisterForms()
-    login_forms = LoginForms()
-    return render_template('start.html',
-                           register_forms=register_forms,
-                           login_forms=login_forms)
+    try:
+        if session['user_id']:
+            return redirect(url_for('main'))
+    except:
+        register_forms = RegisterForms()
+        login_forms = LoginForms()
+        return render_template('start.html',
+                               register_forms=register_forms,
+                               login_forms=login_forms)
 
 
 if __name__ == '__main__':
