@@ -15,7 +15,7 @@ def today_note_template():
     add_note_forms = AddNoteForms()
     edit_note_forms = EditNoteForms()
     search_note_forms = SearchNoteForms()
-    note_list = invoker.today_note()
+    note_list = invoker.today_note(session['user_id'])
     return render_template('today_note.html',
                            add_note_forms=add_note_forms,
                            edit_note_forms=edit_note_forms,

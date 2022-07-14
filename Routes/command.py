@@ -29,13 +29,19 @@ class DeleteNote(Command):
 
 
 class TodayNote(Command):
+    def __init__(self, user_id):
+        self.user_id = user_id
+
     def execute(self):
-        return Note.get_note_for_day(datetime.date.today())
+        return Note.get_note_for_day(datetime.date.today(), self.user_id)
 
 
 class AllActiveNote(Command):
+    def __init__(self, user_id):
+        self.user_id = user_id
+
     def execute(self):
-        return Note.get_all_active()
+        return Note.get_all_active(self.user_id)
 
 
 class SaveNote(Command):
@@ -53,11 +59,11 @@ class Invoker:
     def update_note(self, note: NoteModel, note_id: int):
         UpdateNote(note_id, note).execute()
 
-    def today_note(self):
-        return TodayNote().execute()
+    def today_note(self, user_id):
+        return TodayNote(user_id=user_id).execute()
 
     def save_note(self, note: NoteModel):
         SaveNote(note).execute()
 
-    def get_all_active_note(self):
-        return AllActiveNote().execute()
+    def get_all_active_note(self, user_id):
+        return AllActiveNote(user_id=user_id).execute()

@@ -28,16 +28,18 @@ class Note(NoteModel):
             return False
 
     @staticmethod
-    def get_note_for_day(day):
+    def get_note_for_day(day, user_id):
         try:
-            return db.session.query(NoteModel).filter(NoteModel.planned_date == day, NoteModel.active == 1).all()
+            return db.session.query(NoteModel).filter(NoteModel.planned_date == day,
+                                                      NoteModel.active == 1,
+                                                      NoteModel.user_id == user_id).all()
         except:
             return []
 
     @staticmethod
-    def get_all_active():
+    def get_all_active(user_id):
         try:
-            return db.session.query(NoteModel).filter(NoteModel.active == 1).all()
+            return db.session.query(NoteModel).filter(NoteModel.active == 1, NoteModel.user_id == user_id).all()
         except:
             return []
 

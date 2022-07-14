@@ -27,7 +27,7 @@ def main():
     edit_note_forms = EditNoteForms()
     search_note_forms = SearchNoteForms()
     invoker = Invoker()
-    note_list = invoker.get_all_active_note()
+    note_list = invoker.get_all_active_note(session['user_id'])
     return render_template('main.html',
                            add_note_forms=add_note_forms,
                            edit_note_forms=edit_note_forms,
