@@ -42,21 +42,9 @@ class Note(NoteModel):
             return []
 
     @staticmethod
-    def search_note(title: str, planned_date):
-        try:
-            result = db.session.query(NoteModel).filter(NoteModel.active == 1)
-            if title:
-                result += result.filter(NoteModel.title == title)
-            if planned_date:
-                result += result.filter(NoteModel.planned_date == title)
-            return result.all()
-        except:
-            return []
-
-    @staticmethod
     def delete_note(note_id):
         try:
-            note_db: NoteModel = db.session.query().get(note_id)
+            note_db: NoteModel = db.session.query(NoteModel).get(note_id)
             note_db.active = 0
             db.session.commit()
             return True

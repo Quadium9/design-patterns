@@ -18,7 +18,7 @@
                         Edit note
                         <i class="bi bi-pen"></i>
                     </a>
-                    <a href="#" class="btn btn-danger mx-2" data-toggle="modal" data-target="#RemoveNote">
+                    <a href="#" class="btn btn-danger mx-2" data-toggle="modal" data-target="#RemoveNote" onclick="insert_delete({{ note.id }})">
                         Remove note
                         <i class="bi bi-trash3-fill"></i>
                     </a>
@@ -37,9 +37,13 @@
 
 <script>
     function insert_data(note_id) {
-        $("#edit_form").attr("action", "/note/edit_note/"+note_id);
+        $("#edit_form").attr("action", "/note/edit_note/" + note_id);
         document.getElementById('edit_note_title').value = document.getElementById('note_title_' + note_id).textContent
         document.getElementById('edit_note_description').textContent = document.getElementById('note_description_' + note_id).textContent
         document.getElementById('edit_note_date_field').value = document.getElementById('note_planned_date_' + note_id).textContent
+    }
+
+    function insert_delete(note_id) {
+        $("#delete_button_form").attr("action", "/note/delete_note/" + note_id);
     }
 </script>

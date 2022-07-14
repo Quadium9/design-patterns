@@ -3,6 +3,7 @@ from Forms.login_forms import LoginForms, RegisterForms
 from Database.user_db import User
 from Database.creator import UserCreator
 
+
 r_user = Blueprint('/user', __name__)
 
 
@@ -15,7 +16,7 @@ def login():
         verified_user = User.login_user(created_user)
         if verified_user:
             session['user_id'] = verified_user.id
-            session['username'] = verified_user.username
+            session['username'] = login_forms.username.data
             return redirect(url_for('main'))
     return redirect(url_for('/'))
 
