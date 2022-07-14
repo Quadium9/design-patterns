@@ -1,7 +1,5 @@
 import datetime
 from abc import ABC, abstractmethod
-from Database.note_db import Note
-from Database.user_db import User
 from Database.model import NoteModel, UserModel
 
 
@@ -16,17 +14,17 @@ class Creator(ABC):
 
 
 class NoteCreator(Creator):
-    def __init__(self, note: str, active: bool, title: str):
-        self.active = active
-        self.title = title
-        self.note = note
+    def __init__(self, note_form, user_id):
+        self.note_form = note_form
+        self.user_id = user_id
 
-    def factory_method(self) -> Note:
-        return NoteModel(title=self.title,
-                         note=self.note,
+    def factory_method(self) -> NoteModel:
+        return NoteModel(title=self.note_form.title.data,
+                         description=self.note_form.description.data,
                          create_date=datetime.date.today(),
-                         user_id='',
-                         active=self.active)
+                         user_id=self.user_id,
+                         active=1,
+                         planned_date=self.note_form.date_field.data)
 
 
 class UserCreator(Creator):

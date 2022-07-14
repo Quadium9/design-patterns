@@ -4,7 +4,7 @@ from wtforms.validators import InputRequired, Length
 
 
 class AddNoteForms(FlaskForm):
-    title = StringField('Note name', validators=[InputRequired(), Length(1, 32)])
+    title = StringField('Note title', validators=[InputRequired(), Length(1, 32)])
     description = TextAreaField('Description', validators=[InputRequired(), Length(1, 256)])
     date_field = DateField('Date')
     submit = SubmitField('Save')

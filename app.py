@@ -13,20 +13,24 @@ db = SQLAlchemy(app)
 
 from Routes.r_user import r_user
 from Routes.r_notes import r_note
+from Routes.command import Invoker
 
 app.register_blueprint(r_user, url_prefix='/user')
 app.register_blueprint(r_note, url_prefix='/note')
 
 
-@app.route('/start')
+@app.route('/start', methods=['GET', 'POST'])
 def main():
     add_note_forms = AddNoteForms()
     edit_note_forms = EditNoteForms()
     search_note_forms = SearchNoteForms()
+    invoker = Invoker()
+    note_list = invoker.get_all_active_note()
     return render_template('main.html',
                            add_note_forms=add_note_forms,
                            edit_note_forms=edit_note_forms,
-                           search_note_forms=search_note_forms)
+                           search_note_forms=search_note_forms,
+                           note_list=note_list)
 
 
 @app.route('/', methods=['GET', 'POST'])

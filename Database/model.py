@@ -20,12 +20,13 @@ class NoteModel(Base):
 
     user = relationship('UserModel')
 
-    def __init__(self, title, create_date, note, user_id, active):
+    def __init__(self, title, create_date, description, user_id, active, planned_date):
         self.title = title
         self.create_date = create_date
-        self.note = note
+        self.description = description
         self.user_id = user_id
         self.active = active
+        self.planned_date = planned_date
 
 
 class UserModel(Base):

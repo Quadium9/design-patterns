@@ -1,36 +1,45 @@
 {% include "toolbar.html" %}
 
-<div class="container bg-dark vh-100">
+<div class="container bg-dark h-100">
     <div class="py-4 mx-auto">
-        <div class="card m-4" style="min-width: 16rem; min-height: 10rem;">
-            <div class="card-body mb-1">
-                <h5 class="card-title">Note title</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet,
-                    consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                    Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
-                    montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-                    pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-                    Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                    In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                    dictum felis eu pede mollis pretium.</p>
-                <div class="mt-5">
-                    Date: 2022.06.05
+        {% for note in note_list %}
+            <div class="card m-4" style="min-width: 16rem; min-height: 10rem;">
+                <div class="card-body mb-1">
+                    <h5 class="card-title" id="note_title_{{ note.id }}">{{ note.title }}</h5>
+                    <p class="card-text" id="note_description_{{ note.id }}">{{ note.description }}</p>
+                    <div class="mt-5 d-flex">Create date: <p class="px-2">{{ note.create_date }}</p></div>
+                    <div class="d-flex">Planned date: <p class="px-2"
+                                                         id="note_planned_date_{{ note.id }}">{{ note.planned_date }}</p>
+                    </div>
                 </div>
-                <div class="mt-1">
-                    Create date: 2022.05.06
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary mx-2" data-toggle="modal" data-target="#EditNote"
+                       onclick="insert_data({{ note.id }})">
+                        Edit note
+                        <i class="bi bi-pen"></i>
+                    </a>
+                    <a href="#" class="btn btn-danger mx-2" data-toggle="modal" data-target="#RemoveNote">
+                        Remove note
+                        <i class="bi bi-trash3-fill"></i>
+                    </a>
                 </div>
             </div>
-
-            <div class="card-footer">
-                <a href="#" class="btn btn-primary mx-2" data-toggle="modal" data-target="#EditNote">Edit note <i
-                        class="bi bi-pen"></i></a>
-                <a href="#" class="btn btn-danger mx-2" data-toggle="modal" data-target="#RemoveNote">Remove note <i
-                        class="bi bi-trash3-fill"></i></a>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
+
 
 {% include 'edit_note.html' %}
 
 {% include 'remove_note.html' %}
+
+{% include 'add_note.html' %}
+
+<script>
+    function insert_data(note_id) {
+        $("#edit_form").attr("action", "/note/edit_note/"+note_id);
+        document.getElementById('edit_note_title').value = document.getElementById('note_title_' + note_id).textContent
+        document.getElementById('edit_note_description').textContent = document.getElementById('note_description_' + note_id).textContent
+        document.getElementById('edit_note_date_field').value = document.getElementById('note_planned_date_' + note_id).textContent
+    }
+</script>

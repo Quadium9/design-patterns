@@ -9,19 +9,19 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post" action="" id="edit_form">
                     <fieldset>
                         <div class="form-group">
                             {{ edit_note_forms.title.label(class='form-control-label') }}
-                            {{ edit_note_forms.title(class='form-control') }}
+                            {{ edit_note_forms.title(class='form-control', id='edit_note_title') }}
                         </div>
                         <div class="form-group">
                             {{ edit_note_forms.description.label(class='form-control-label') }}
-                            {{ edit_note_forms.description(class='form-control', style='height:250px;') }}
+                            {{ edit_note_forms.description(class='form-control', style='height:250px;', id='edit_note_description') }}
                         </div>
                         <div class="form-group">
                             {{ edit_note_forms.date_field.label(class='form-control-label') }}
-                            {{ edit_note_forms.date_field(class='form-control') }}
+                            {{ edit_note_forms.date_field(class='form-control', id='edit_note_date_field') }}
                         </div>
                     </fieldset>
                     <div class="field-group mt-5" style="text-align:center;">

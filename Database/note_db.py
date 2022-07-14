@@ -6,13 +6,14 @@ class Note(NoteModel):
     @staticmethod
     def update_note(note: NoteModel, note_id: int):
         try:
-            note_db: NoteModel = db.session.query(NoteModel).get(note_id)
-            if note.note:
+            note_db: NoteModel = db.session.query(NoteModel).filter(NoteModel.id == note_id).first()
+            if note.title is not None:
                 note_db.title = note.title
-            if note.note:
-                note_db.note = note.note
-            if note.create_date:
-                note_db.create_date = note.create_date
+            if note.description is not None:
+                note_db.description = note.description
+            if note.planned_date is not None:
+                note_db.planned_date = note.planned_date
+            db.session.commit()
             return True
         except:
             return False
@@ -29,21 +30,21 @@ class Note(NoteModel):
     @staticmethod
     def get_note_for_day(day):
         try:
-            return db.session.query(NoteModel).filter(NoteModel.create_date == day).all()
+            return db.session.query(NoteModel).filter(NoteModel.planned_date == day, NoteModel.active == 1).all()
         except:
             return []
 
     @staticmethod
-    def get_note_for_user(user_id):
+    def get_all_active():
         try:
-            return db.session.query(NoteModel).filter(NoteModel.user_id == user_id).all()
+            return db.session.query(NoteModel).filter(NoteModel.active == 1).all()
         except:
             return []
 
     @staticmethod
     def search_note(title: str, planned_date):
         try:
-            result = db.session.query(NoteModel)
+            result = db.session.query(NoteModel).filter(NoteModel.active == 1)
             if title:
                 result += result.filter(NoteModel.title == title)
             if planned_date:
@@ -55,7 +56,9 @@ class Note(NoteModel):
     @staticmethod
     def delete_note(note_id):
         try:
-            db.session.query().filter(NoteModel.id == note_id).delete()
+            note_db: NoteModel = db.session.query().get(note_id)
+            note_db.active = 0
+            db.session.commit()
             return True
         except:
             return False
